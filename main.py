@@ -27,7 +27,9 @@ class HardTripletMiningLoss(torch.nn.Module):
 
     def forward(self, anchor, positive, negative, ind):
         embeddings = torch.cat([anchor, positive, negative], 0)
-        labels = ind[:, 0].t().contiguous().view(-1).cuda()
+        labels = ind[:, 0].t().contiguous().view(-1)
+        if torch.cuda.is_available():
+            labels = labels.cuda()
 
         pair_dist = torch.mm(embeddings, embeddings.t())
         sq_norm = pair_dist.diag()

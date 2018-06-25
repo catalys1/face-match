@@ -7,6 +7,7 @@ import dataset
 
 
 def pair_distance(net, dataloader):
+    net.eval()
     dist = []
     labs = []
     for batch in tqdm.tqdm(dataloader):
